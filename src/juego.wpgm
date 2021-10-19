@@ -1,7 +1,7 @@
 import wollok.game.*
 import Jugador.*
 import Nivel.*
-//import disparo.*
+import disparo.*
 
 program juego {
 	const ancho = 13
@@ -10,7 +10,7 @@ program juego {
 	game.height(alto)
 	game.width(ancho)
 	game.addVisual(usuario)
-	//game.addVisual(disparo)
+	game.addVisual(disparo)
 	
 	keyboard.d().onPressDo({
 		usuario.moverse(1)

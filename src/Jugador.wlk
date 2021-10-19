@@ -1,5 +1,5 @@
 import wollok.game.*
-//import disparo.*
+import disparo.*
 
 class Jugador{
 	var property position
@@ -31,7 +31,7 @@ object usuario inherits Jugador(
 ) {	
 	var disparando = false
 	
-	/*method disparar(){
+	method disparar(){
 		disparando = true
 		const userPosition = position
 		if(!disparando){
@@ -46,7 +46,7 @@ object usuario inherits Jugador(
 			enemigo.golpe()
 			game.removeTickEvent("movimiento")
 		})
-	}*/
+	}
 }
 
 class Enemigo inherits Jugador{

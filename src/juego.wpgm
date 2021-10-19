@@ -1,8 +1,36 @@
 import wollok.game.*
-import pepita.*
+import Jugador.*
+import Nivel.*
+import disparo.*
 
 program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
+	const ancho = 13
+	const alto = 16
+	
+	game.height(alto)
+	game.width(ancho)
+	game.addVisual(usuario)
+	game.addVisual(disparo)
+	
+	keyboard.d().onPressDo({
+		usuario.moverse(1)
+	})
+	
+	keyboard.a().onPressDo({
+		usuario.moverse(-1)
+	})
+	
+	keyboard.w().onPressDo({
+		usuario.disparar()
+		console.println("disparo")
+	})
+	
+	game.boardGround("assets/fondo.png")
+	
+	var nivel1 = new Nivel()
+	nivel1.empezar(1)
+	
 	game.start()
+		
 }
+

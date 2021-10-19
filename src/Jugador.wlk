@@ -1,10 +1,16 @@
 import wollok.game.*
-import disparo.*
+//import disparo.*
 
 class Jugador{
 	var property position
 	var property image
 	var property vida
+	
+	method position() = position
+	
+	method cambiarPosicion(x, y){
+		position = game.at(x, y)
+	}
 	
 	method moverse(direccion){
 		if (! ( (position.x() == 0 && direccion < 0) || (position.x() == 12 && direccion > 0) ) )
@@ -25,7 +31,7 @@ object usuario inherits Jugador(
 ) {	
 	var disparando = false
 	
-	method disparar(){
+	/*method disparar(){
 		disparando = true
 		const userPosition = position
 		if(!disparando){
@@ -40,7 +46,7 @@ object usuario inherits Jugador(
 			enemigo.golpe()
 			game.removeTickEvent("movimiento")
 		})
-	}
+	}*/
 }
 
 class Enemigo inherits Jugador{

@@ -1,6 +1,6 @@
 import wollok.game.*
 
-object disparo {
+/*object disparo {
 	
 	//VELOCIDAD PELOTA
 	const speed = 100
@@ -19,14 +19,4 @@ object disparo {
 	method disparar(x, y){
 		position = game.at(x, y)
 	}
-	
-	//MOVIMIENTO EN Y
-	method moverseEnY(){
-		//if([0, 24].contains(position.y())) direccionY *= -1
-	}
-	
-	// Si se sale de los límites nos vamos
-	method gameOver(){
-		//if ([-1, 25].contains(position.x())) gameManager.mostrarMenu()
-  	}	
-}
+}*/

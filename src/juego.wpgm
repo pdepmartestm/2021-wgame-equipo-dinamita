@@ -1,7 +1,7 @@
 import wollok.game.*
 import Jugador.*
 import Nivel.*
-import disparo.*
+//import disparo.*
 
 program juego {
 	const ancho = 13
@@ -10,7 +10,7 @@ program juego {
 	game.height(alto)
 	game.width(ancho)
 	game.addVisual(usuario)
-	game.addVisual(disparo)
+	//game.addVisual(disparo)
 	
 	keyboard.d().onPressDo({
 		usuario.moverse(1)
@@ -21,14 +21,14 @@ program juego {
 	})
 	
 	keyboard.w().onPressDo({
-		usuario.disparar()
+		//usuario.disparar()
 		console.println("disparo")
 	})
 	
 	game.boardGround("assets/fondo.png")
 	
 	var nivel1 = new Nivel()
-	nivel1.empezar(1)
+	nivel1.empezar(1, 1000, 500)
 	
 	game.start()
 		

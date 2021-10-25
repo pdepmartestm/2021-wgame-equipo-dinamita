@@ -1,11 +1,11 @@
 import wollok.game.*
 
-object disparo {
+class Disparo {
 	
 	//VELOCIDAD PELOTA
 	const speed = 200
 	const image = 'assets/disparo.png'
-	var property position = game.at(20, 20)
+	var property position = game.at(0, 0)
 	
 	method image() = image	
 	method speed() = speed

@@ -1,5 +1,5 @@
 import wollok.game.*
-import disparo.*
+import Disparos.*
 
 class Jugador{
 	var property position
@@ -29,12 +29,19 @@ object usuario inherits Jugador(
 	image = "assets/nave.png",
 	vida = 3
 ) {	
+	
+	var property disparo = new Disparo(
+		position = game.at(6, 0),
+		image = 'assets/disparo.png',
+		speed = 200	
+	)
 	var disparando = false
 	
 	method disparar(){
-		disparando = true
+		console.println(disparo.position())
 		const userPosition = position
 		if(!disparando){
+			disparando = !disparando
 			disparo.disparar(userPosition.x(), userPosition.y()+1)
 			
 			game.onTick(disparo.speed(), 'movimiento', {
@@ -43,21 +50,29 @@ object usuario inherits Jugador(
 		}
 			
 		game.whenCollideDo(disparo, { enemigo =>
+			disparo.disparar(20, 20)
 			enemigo.golpe()
 			game.removeTickEvent("movimiento")
+			disparando = !disparando	
 		})
 	}
 }
 
 class Enemigo inherits Jugador{
 	
+	/*var property disparo = new Disparo(
+		position = game.at(6, 0),
+		image = 'assets/disparo.png',
+		speed = 200	
+	)*/
 	method disparar(){
-		//const userPosition = position
+		const userPosition = position
 		//const disparo = new Disparo(position = game.at(userPosition.x(), userPosition.y()-1));
 		/*game.addVisual(disparo)
 		game.onTick(disparo.speed(), 'movimiento', {
 			disparo.moverse(-1)
 		})
+		
 		game.whenCollideDo(disparo, { Jugador =>
 			Jugador.golpe()
 		})*/

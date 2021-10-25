@@ -21,7 +21,7 @@ program juego {
 	})
 	
 	keyboard.w().onPressDo({
-		//usuario.disparar()
+		usuario.disparar()
 		console.println("disparo")
 	})
 	

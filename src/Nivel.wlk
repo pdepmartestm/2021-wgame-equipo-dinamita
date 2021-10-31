@@ -19,32 +19,34 @@ class Nivel {
 		}else if(x == 11  && fila <= 15){
 			self.generarEnemigos(2, y-1)
 		}
-		//console.println(enemigos.size())
-		/*game.onTick(1000, 'moverEnemigos', { 
-			self.moverEnemigos(1000)
-		})*/
 	}
 	
 	method empezar(filas, velocidadMovimiento, velocidadDisparo){
 		self.generarEnemigos(2, filas)
 		
 		game.onTick(velocidadMovimiento, 'moverEnemigos', { 
-			self.moverEnemigos(velocidadMovimiento)
+			self.moverEnemigos()
 		})
 		
 		game.onTick(velocidadDisparo, 'dispararEnemigos', { 
-			self.moverEnemigos(velocidadDisparo)
+			self.disparoEnemigo()
 		})
 		
 	}
 	
-	method moverEnemigos(velocidad){
+	method moverEnemigos(){
 		enemigos.forEach({enemigo =>
 			enemigo.position(enemigo.position().right( direccion ))
 		})
 		if(enemigos.any({e => e.position().x() == 12}) || enemigos.any({e => e.position().x() == 0})){
 			direccion *= -1
 		}
+	}
+	
+	method disparoEnemigo(){
+		const enemigosVivos = enemigos.filter{enemigo => enemigo.vida()>0}
+		const enemigo = enemigosVivos.anyOne()
+		enemigo.disparar()
 	}
 	
 	

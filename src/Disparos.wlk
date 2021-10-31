@@ -2,7 +2,6 @@ import wollok.game.*
 
 class Disparo {
 	
-	//VELOCIDAD PELOTA
 	const speed = 200
 	const image = 'assets/disparo.png'
 	var property position = game.at(0, 0)
@@ -10,13 +9,34 @@ class Disparo {
 	method image() = image	
 	method speed() = speed
 	
-	method moverse(direccion){	
-		if(position.y() < 16) {
-			self.position(position.up( direccion ))
-		}
-	}
-	
 	method disparar(x, y){
 		position = game.at(x, y)
 	}
 }
+
+object disparoUsuario inherits Disparo{
+	var property disparando = false
+	
+	method moverse(){	
+		if(position.y() < 16) {
+			self.position(position.up( 1 ))
+		}else{
+			disparando = false
+			game.removeTickEvent("disparoUsuario")
+		}
+	}
+}
+
+object disparoEnemigo inherits Disparo{
+	var property disparando = false
+	
+	method moverse(){	
+		if(position.y() >= 0) {
+			self.position(position.down( 1 ))
+		}else{
+			disparando = false
+			game.removeTickEvent("disparoEnemigo")
+		}
+	}
+}
+

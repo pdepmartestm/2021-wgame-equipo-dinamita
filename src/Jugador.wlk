@@ -30,51 +30,44 @@ object usuario inherits Jugador(
 	vida = 3
 ) {	
 	
-	var property disparo = new Disparo(
-		position = game.at(6, 0),
-		image = 'assets/disparo.png',
-		speed = 200	
-	)
-	var disparando = false
-	
 	method disparar(){
-		console.println(disparo.position())
 		const userPosition = position
-		if(!disparando){
-			disparando = !disparando
-			disparo.disparar(userPosition.x(), userPosition.y()+1)
+		if(!disparoUsuario.disparando()){
+			disparoUsuario.disparando(!disparoUsuario.disparando())
+			disparoUsuario.disparar(userPosition.x(), userPosition.y()+1)
 			
-			game.onTick(disparo.speed(), 'movimiento', {
-				disparo.moverse(1)
+			game.onTick(disparoUsuario.speed(), 'disparoUsuario', {
+				disparoUsuario.moverse()
 			})
 		}
 			
-		game.whenCollideDo(disparo, { enemigo =>
-			disparo.disparar(20, 20)
+		game.whenCollideDo(disparoUsuario, { enemigo =>
+			disparoUsuario.disparar(20, 20)
 			enemigo.golpe()
-			game.removeTickEvent("movimiento")
-			disparando = !disparando	
+			game.removeTickEvent("disparoUsuario")
+			disparoUsuario.disparando(!disparoUsuario.disparando())
 		})
 	}
 }
 
 class Enemigo inherits Jugador{
 	
-	/*var property disparo = new Disparo(
-		position = game.at(6, 0),
-		image = 'assets/disparo.png',
-		speed = 200	
-	)*/
 	method disparar(){
-		const userPosition = position
-		//const disparo = new Disparo(position = game.at(userPosition.x(), userPosition.y()-1));
-		/*game.addVisual(disparo)
-		game.onTick(disparo.speed(), 'movimiento', {
-			disparo.moverse(-1)
+		const enemyPosition = position
+		if(!disparoEnemigo.disparando()){
+			disparoEnemigo.disparando(!disparoEnemigo.disparando())
+			disparoEnemigo.disparar(enemyPosition.x(), enemyPosition.y()-1)
+			
+			game.onTick(disparoEnemigo.speed(), 'disparoEnemigo', {
+				disparoEnemigo.moverse()
+			})
+		}
+			
+		game.whenCollideDo(disparoEnemigo, { usuario =>
+			disparoEnemigo.disparar(20, 20)
+			usuario.golpe()
+			game.removeTickEvent("disparoEnemigo")
+			disparoEnemigo.disparando(!disparoEnemigo.disparando())
 		})
-		
-		game.whenCollideDo(disparo, { Jugador =>
-			Jugador.golpe()
-		})*/
 	}
 }

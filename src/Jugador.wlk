@@ -1,5 +1,6 @@
 import wollok.game.*
 import Disparos.*
+import gameManager.*
 
 class Jugador{
 	var property position
@@ -26,14 +27,19 @@ object usuario inherits Jugador(
 ) {	
 	method colision(){
 		console.println("disparoEnemigo colisiona con el usuario")
-		
+		try{
+			game.removeTickEvent("disparoEnemigo")
+		} catch e : Exception{
+			
+		}
 		disparoEnemigo.disparar(20, 20)
-		game.removeTickEvent("disparoEnemigo")
 		disparoEnemigo.disparando(false)
 		
 		//Le resto la vida al jugador
 		vida -= 1
-		if(vida <= 0) game.removeVisual(self)
+		if(vida <= 0) {
+			gameManager.gameOver()
+		}
 	}
 	
 	method disparar(){
@@ -59,8 +65,12 @@ class Enemigo inherits Jugador{
 		console.println("disparoUsuario colisiona con el enemigo")
 		
 		//Elimino el disparo del usuario
+		try{
+			game.removeTickEvent("disparoUsuario")
+		} catch e : Exception{
+			
+		}
 		disparoUsuario.disparar(20, 20)
-		game.removeTickEvent("disparoUsuario")
 		disparoUsuario.disparando(false)
 		
 		//Añadir puntos
@@ -68,6 +78,9 @@ class Enemigo inherits Jugador{
 		//Le resto la vida al enemigo
 		vida -= 1
 		if(vida <= 0) game.removeVisual(self)
+		
+		gameManager.sumarPunto()
+		gameManager.validarCantidadEnemigos()
 	}
 	
 	method disparar(){

@@ -3,7 +3,7 @@ class Score {
 	var property image	
 
 	method position() = position
-	method position(newPosition) = { position = newPosition } 
+	method position(newPosition) { position = newPosition } 
 	method changeScoreImage(newScore) {
 		image = newScore + '.png'
 	}

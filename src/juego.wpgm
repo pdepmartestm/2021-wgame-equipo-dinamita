@@ -1,11 +1,11 @@
 import wollok.game.*
 import Jugador.*
-import Nivel.*
+import gameManager.*
 import Disparos.*
 
 program juego {
 	const ancho = 13
-	const alto = 16
+	const alto = 15
 	
 	game.height(alto)
 	game.width(ancho)
@@ -27,8 +27,7 @@ program juego {
 	
 	game.boardGround("assets/fondo.png")
 	
-	var nivel1 = new Nivel()
-	nivel1.empezar(1, 1000, 500)
+	gameManager.empezar()
 	
 	game.start()
 		

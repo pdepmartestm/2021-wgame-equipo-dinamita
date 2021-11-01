@@ -2,7 +2,7 @@ import wollok.game.*
 
 class Disparo {
 	
-	const speed = 200
+	const speed = 10
 	const image = 'assets/disparo.png'
 	var property position = game.at(30, 30)
 	
@@ -36,10 +36,11 @@ object disparoUsuario inherits Disparo{
 	var property disparando = false
 	
 	method moverse(){	
-		if(position.y() < 16) {
+		if(position.y() < 13) {
 			self.position(position.up( 1 ))
 		}else{
 			disparando = false
+			self.desaparecer()
 			game.removeTickEvent("disparoUsuario")
 		}
 	}

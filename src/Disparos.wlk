@@ -4,7 +4,7 @@ class Disparo {
 	
 	const speed = 200
 	const image = 'assets/disparo.png'
-	var property position = game.at(0, 0)
+	var property position = game.at(30, 30)
 	
 	method image() = image	
 	method speed() = speed
@@ -12,7 +12,24 @@ class Disparo {
 	method disparar(x, y){
 		position = game.at(x, y)
 	}
-	method golpe(){}
+	
+	method desaparecer(){
+		position = game.at(30, 30)
+	}
+	
+	method colision(){
+		try{
+			game.removeTickEvent("disparoUsuario")
+			game.removeTickEvent("disparoEnemigo")
+		} catch e : Exception{
+			
+		}
+		disparoUsuario.disparando(false)
+		disparoEnemigo.disparando(false)
+		disparoUsuario.desaparecer()
+		disparoEnemigo.desaparecer()
+		
+	}
 }
 
 object disparoUsuario inherits Disparo{

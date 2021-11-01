@@ -16,11 +16,6 @@ class Jugador{
 		if (! ( (position.x() == 0 && direccion < 0) || (position.x() == 12 && direccion > 0) ) )
 			self.position(position.right( direccion ))
 	}
-	
-	method golpe(){
-		vida -= 1
-		if(vida <= 0) game.removeVisual(self)
-	}
 }
 
 
@@ -29,6 +24,17 @@ object usuario inherits Jugador(
 	image = "assets/nave.png",
 	vida = 3
 ) {	
+	method colision(){
+		console.println("disparoEnemigo colisiona con el usuario")
+		
+		disparoEnemigo.disparar(20, 20)
+		game.removeTickEvent("disparoEnemigo")
+		disparoEnemigo.disparando(false)
+		
+		//Le resto la vida al jugador
+		vida -= 1
+		if(vida <= 0) game.removeVisual(self)
+	}
 	
 	method disparar(){
 		const userPosition = position
@@ -41,16 +47,28 @@ object usuario inherits Jugador(
 			})
 		}
 			
-		game.whenCollideDo(disparoUsuario, { enemigo =>
-			disparoUsuario.disparar(20, 20)
-			enemigo.golpe()
-			game.removeTickEvent("disparoUsuario")
-			disparoUsuario.disparando(!disparoUsuario.disparando())
+		game.whenCollideDo(disparoUsuario, { elemento =>
+			elemento.colision()
 		})
 	}
 }
 
 class Enemigo inherits Jugador{
+	
+	method colision(){
+		console.println("disparoUsuario colisiona con el enemigo")
+		
+		//Elimino el disparo del usuario
+		disparoUsuario.disparar(20, 20)
+		game.removeTickEvent("disparoUsuario")
+		disparoUsuario.disparando(false)
+		
+		//Añadir puntos
+		
+		//Le resto la vida al enemigo
+		vida -= 1
+		if(vida <= 0) game.removeVisual(self)
+	}
 	
 	method disparar(){
 		const enemyPosition = position
@@ -63,11 +81,8 @@ class Enemigo inherits Jugador{
 			})
 		}
 			
-		game.whenCollideDo(disparoEnemigo, { usuario =>
-			disparoEnemigo.disparar(20, 20)
-			usuario.golpe()
-			game.removeTickEvent("disparoEnemigo")
-			disparoEnemigo.disparando(!disparoEnemigo.disparando())
+		game.whenCollideDo(disparoEnemigo, { elemento =>
+			elemento.colision()
 		})
 	}
 }

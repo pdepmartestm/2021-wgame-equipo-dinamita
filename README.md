@@ -2,7 +2,7 @@
 
 ## Equipo de desarrollo
 
-- Martin Villagra.
+- Juan Martin Villagra.
 - Maximo Tomas Bianchi Canelo.
 - Rodrigo Perez.
 

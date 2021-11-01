@@ -12,6 +12,7 @@ class Disparo {
 	method disparar(x, y){
 		position = game.at(x, y)
 	}
+	method golpe(){}
 }
 
 object disparoUsuario inherits Disparo{

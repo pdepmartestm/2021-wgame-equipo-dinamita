@@ -5,7 +5,6 @@ class Nivel {
 	var property enemigos = []
 	var property indice = 1
 	var property direccion = 1
-	method enemigos() = enemigos
 	
 	method generarEnemigos(x, y){
 		const fila = 15-y
@@ -45,7 +44,9 @@ class Nivel {
 	
 	method disparoEnemigo(){
 		const enemigosVivos = enemigos.filter{enemigo => enemigo.vida()>0}
-		const enemigo = enemigosVivos.anyOne()
+		const filaDeAbajo = enemigosVivos.min({enemigo => enemigo.position().y()}).position().y() //Obtengo el enemigo cuya posicion en "y" es la mas baja y luego obtengo el valor de esta
+		const enemigosPosibles = enemigosVivos.filter{enemigo => enemigo.position().y() == filaDeAbajo}
+		const enemigo = enemigosPosibles.anyOne()
 		enemigo.disparar()
 	}
 	

@@ -18,7 +18,7 @@ class Jugador{
 	}
 	
 	method golpe(){
-		vida -= vida
+		vida -= 1
 		if(vida <= 0) game.removeVisual(self)
 	}
 }

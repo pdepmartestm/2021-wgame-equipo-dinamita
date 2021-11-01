@@ -6,6 +6,8 @@ class Jugador{
 	var property position
 	var property image
 	var property vida
+	const lowL = 0
+	const hightL = 12
 	
 	method position() = position
 	
@@ -14,7 +16,7 @@ class Jugador{
 	}
 	
 	method moverse(direccion){
-		if (! ( (position.x() == 0 && direccion < 0) || (position.x() == 12 && direccion > 0) ) )
+		if (! ( (position.x() == lowL && direccion < 0) || (position.x() == hightL && direccion > 0) ) )
 			self.position(position.right( direccion ))
 	}
 }

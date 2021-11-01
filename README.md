@@ -1,18 +1,15 @@
-# Nombre del juego (<- borrar y completar)
+# Space Battle
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+- Martin Villagra.
+- Maximo Tomas Bianchi Canelo.
+- Rodrigo Perez.
 
-## Capturas
-
-(agregar)
 
 ## Reglas de Juego / Instrucciones
 
-(Escribirlas)
+Elimina la mayor cantidad de enemigo posibles antes de que te destruyan.
 
 
 ## Otros

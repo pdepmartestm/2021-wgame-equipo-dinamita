@@ -50,6 +50,10 @@ object gameManager {
 			self.generarEnemigos(2, y-1)
 		}
 	}
+	//Con este metodo borro al enemigo del jeugo
+	method borrarEnemigo(enemigo){
+		enemigos.remove(enemigo)
+	}
 	
 	method empezar(){
 		game.addVisual(scoreNumberUnidades)
@@ -81,7 +85,7 @@ object gameManager {
 	}
 	
 	method avanzarEnemigos(){
-		if(enemigos.any({e => e.position().y() == 7})){
+		if(enemigos.any({e => e.position().y() == 9})){
 			game.removeTickEvent("avanzarEnemigos")
 		}else{
 			enemigos.forEach({enemigo =>
@@ -99,8 +103,17 @@ object gameManager {
 	}
 	
 	method gameOver(){
-		game.clear()
-		self.empezar()
+		game.removeTickEvent('moverEnemigos')
+		game.removeTickEvent('dispararEnemigos')
+		game.addVisual(ganador)
+	}
+	
+	method gameOver2() {
+		game.removeTickEvent('moverEnemigos')
+		game.removeTickEvent('dispararEnemigos')
+		game.removeTickEvent("avanzarEnemigos")
+		usuario.eliminar()
+		
 	}
 	
 	method validarCantidadEnemigos(){
@@ -108,6 +121,10 @@ object gameManager {
 			self.gameOver()
 		}
 	}
-	
-	
+		
+}
+
+object ganador {
+	var property image = "ganaste.png"
+	var property position = game.at(1,7)
 }

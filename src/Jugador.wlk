@@ -25,6 +25,10 @@ object usuario inherits Jugador(
 	image = "assets/nave.png",
 	vida = 3
 ) {	
+	method eliminar(){
+		position = game.at(21,21)
+	}
+	
 	method colision(){
 		console.println("disparoEnemigo colisiona con el usuario")
 		try{
@@ -38,7 +42,7 @@ object usuario inherits Jugador(
 		//Le resto la vida al jugador
 		vida -= 1
 		if(vida <= 0) {
-			gameManager.gameOver()
+			gameManager.gameOver2()
 		}
 	}
 	
@@ -79,6 +83,8 @@ class Enemigo inherits Jugador{
 		vida -= 1
 		if(vida <= 0) game.removeVisual(self)
 		
+		//Saco al enemigo
+		gameManager.borrarEnemigo(self)	
 		gameManager.sumarPunto()
 		gameManager.validarCantidadEnemigos()
 	}

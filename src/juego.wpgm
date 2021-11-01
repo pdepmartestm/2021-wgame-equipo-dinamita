@@ -30,6 +30,6 @@ program juego {
 	gameManager.empezar()
 	
 	game.start()
-		
+	
 }
 

@@ -113,6 +113,7 @@ object gameManager {
 		game.removeTickEvent('dispararEnemigos')
 		game.removeTickEvent("avanzarEnemigos")
 		usuario.eliminar()
+		game.addVisual(perder)
 		
 	}
 	
@@ -126,5 +127,10 @@ object gameManager {
 
 object ganador {
 	var property image = "ganaste.png"
+	var property position = game.at(1,7)
+}
+
+object perder {
+	var property image = "perdiste.png"
 	var property position = game.at(1,7)
 }

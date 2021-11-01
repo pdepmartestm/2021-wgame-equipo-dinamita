@@ -12,6 +12,7 @@ program juego {
 	game.addVisual(usuario)
 	game.addVisual(disparoUsuario)
 	game.addVisual(disparoEnemigo)
+
 	
 	keyboard.d().onPressDo({
 		usuario.moverse(1)

@@ -58,10 +58,7 @@ object usuario inherits Jugador(
 				disparoUsuario.moverse()
 			})
 		}
-			
-		game.whenCollideDo(disparoUsuario, { elemento =>
-			elemento.colision()
-		})
+		
 	}
 }
 
@@ -101,9 +98,5 @@ class Enemigo inherits Jugador{
 				disparoEnemigo.moverse()
 			})
 		}
-			
-		game.whenCollideDo(disparoEnemigo, { elemento =>
-			elemento.colision()
-		})
 	}
 }

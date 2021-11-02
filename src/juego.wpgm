@@ -13,6 +13,14 @@ program juego {
 	game.addVisual(disparoUsuario)
 	game.addVisual(disparoEnemigo)
 
+
+
+	game.whenCollideDo(disparoEnemigo, { elemento =>
+		elemento.colision()
+	})
+	game.whenCollideDo(disparoUsuario, { elemento =>
+		elemento.colision()
+	})
 	
 	keyboard.d().onPressDo({
 		usuario.moverse(1)

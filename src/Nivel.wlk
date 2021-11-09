@@ -1,51 +1,105 @@
 import wollok.game.*
 import Jugador.*
+import Score.*
+import Disparos.*
+import enemigosManager.*
 
 class Nivel {
-	var property enemigos = []
-	var property indice = 1
-	var property direccion = 1
-	method enemigos() = enemigos
+	var property velocidadEnemigos 
+	var property velocidadDisparos
+	var property velocidadAvance
 	
-	method generarEnemigos(x, y){
-		const fila = 15-y
-		if(x.between(2, 10) && fila <= 15){
-			const enemigo = new Enemigo(position = game.at(x, fila), image = "assets/enemigo.png", vida = 1)
-			enemigos.add(enemigo)	
+	var totalScore = 0
+	
+	method totalScore() = totalScore
+	
+	method sumarPunto(){
+		totalScore+=1
+		
+		const centenas = totalScore.div(100).toString()
+		const decenas = (totalScore.div(10) % 10).toString()
+		const unidades = (totalScore % 10).toString()
+		
+		scoreNumberUnidades.changeScoreImage(unidades.toString())
+		scoreNumberDecenas.changeScoreImage(decenas.toString())
+		scoreNumberCentenas.changeScoreImage(centenas.toString())
+	}
+	
+	method empezar(){
+		game.addVisual(scoreNumberUnidades)
+		game.addVisual(scoreNumberDecenas)
+		game.addVisual(scoreNumberCentenas)
+		
+		enemigosManager.generarEnemigos(2, 1)
+		
+		game.onTick(velocidadEnemigos, 'moverEnemigos', { 
+			enemigosManager.moverEnemigos()
+		})
+		
+		game.onTick(velocidadDisparos, 'dispararEnemigos', { 
+			enemigosManager.dispararEnemigo()
+		})
+		
+		game.onTick(velocidadAvance, "avanzarEnemigos",{
+			enemigosManager.avanzarEnemigos()
+		})
+		
+	}
+	
+	method gameOver(){
+		try{
+			game.removeTickEvent("moverEnemigos")
+		} catch e : Exception{
+			
+		}
+		game.removeTickEvent('dispararEnemigos')
+		game.addVisual(ganador)
+	}
+	
+	method gameOver2() {
+		try{
+			game.removeTickEvent("avanzarEnemigos")
+		} catch e : Exception{
+			
+		}
+		game.removeTickEvent('moverEnemigos')
+		game.removeTickEvent('dispararEnemigos')
+		usuario.eliminar()
+		game.addVisual(perder)
+		
+	}	
+}
 
-			game.addVisual(enemigo)
-			console.println(self.enemigos().size())
-			self.generarEnemigos(x+1, y)	
-		}else if(x == 11  && fila <= 15){
-			self.generarEnemigos(2, y-1)
-		}
-		//console.println(enemigos.size())
-		/*game.onTick(1000, 'moverEnemigos', { 
-			self.moverEnemigos(1000)
-		})*/
-	}
+object nivel1 inherits Nivel(
+	velocidadEnemigos = 600, 
+	velocidadDisparos = 600,
+	velocidadAvance = 15000
+){
 	
-	method empezar(filas, velocidadMovimiento, velocidadDisparo){
-		self.generarEnemigos(2, filas)
-		
-		game.onTick(velocidadMovimiento, 'moverEnemigos', { 
-			self.moverEnemigos(velocidadMovimiento)
-		})
-		
-		game.onTick(velocidadDisparo, 'dispararEnemigos', { 
-			self.moverEnemigos(velocidadDisparo)
-		})
-		
-	}
+}
+
+object nivel2 inherits Nivel(
+	velocidadEnemigos = 400, 
+	velocidadDisparos = 400,
+	velocidadAvance = 12000
+){
 	
-	method moverEnemigos(velocidad){
-		enemigos.forEach({enemigo =>
-			enemigo.position(enemigo.position().right( direccion ))
-		})
-		if(enemigos.any({e => e.position().x() == 12}) || enemigos.any({e => e.position().x() == 0})){
-			direccion *= -1
-		}
-	}
+}
+
+object nivel3 inherits Nivel(
+	velocidadEnemigos = 300, 
+	velocidadDisparos = 300,
+	velocidadAvance = 8000
+){
 	
-	
+}
+
+object ganador {
+	var property image = "ganaste.png"
+	var property position = game.at(1,7)
+}
+
+object perder {
+	var property image = "perdiste.png"
+	var property position = game.at(1,7)
 }

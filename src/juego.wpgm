@@ -2,6 +2,7 @@ import wollok.game.*
 import Jugador.*
 import gameManager.*
 import Disparos.*
+import Nivel.*
 
 program juego {
 	const ancho = 13
@@ -12,8 +13,6 @@ program juego {
 	game.addVisual(usuario)
 	game.addVisual(disparoUsuario)
 	game.addVisual(disparoEnemigo)
-
-
 
 	game.whenCollideDo(disparoEnemigo, { elemento =>
 		elemento.colision()
@@ -31,12 +30,16 @@ program juego {
 	})
 	
 	keyboard.w().onPressDo({
-		usuario.disparar()
+		usuario.disparar(disparoUsuario, 'disparoUsuario', 1)
+	})
+	
+	keyboard.n().onPressDo({
+		
 	})
 	
 	game.boardGround("assets/fondo.png")
 	
-	gameManager.empezar()
+	nivel1.empezar()
 	
 	game.start()
 	

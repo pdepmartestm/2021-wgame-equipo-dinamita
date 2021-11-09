@@ -1,6 +1,7 @@
 import wollok.game.*
 import Disparos.*
 import gameManager.*
+import enemigosManager.*
 
 class Jugador{
 	var property position
@@ -15,6 +16,18 @@ class Jugador{
 		position = game.at(x, y)
 	}
 	
+	method disparar(disparo, evento, direccion){
+		const userPosition = position
+		if(!disparo.disparando()){
+			disparo.disparando(!disparo.disparando())
+			disparo.disparar(userPosition.x(), userPosition.y() + direccion)
+			
+			game.onTick(disparo.speed(), evento, {
+				disparo.moverse()
+			})
+		}
+	}
+	
 	method moverse(direccion){
 		if (! ( (position.x() == low && direccion < 0) || (position.x() == hight && direccion > 0) ) )
 			self.position(position.right( direccion ))
@@ -27,6 +40,8 @@ object usuario inherits Jugador(
 	image = "assets/nave.png",
 	vida = 3
 ) {	
+	method evento() = "disparoUsuario" 
+	
 	method eliminar(){
 		position = game.at(21,21)
 	}
@@ -38,7 +53,7 @@ object usuario inherits Jugador(
 		} catch e : Exception{
 			
 		}
-		disparoEnemigo.disparar(20, 20)
+		disparoEnemigo.desaparecer()
 		disparoEnemigo.disparando(false)
 		
 		//Le resto la vida al jugador
@@ -47,22 +62,10 @@ object usuario inherits Jugador(
 			gameManager.gameOver2()
 		}
 	}
-	
-	method disparar(){
-		const userPosition = position
-		if(!disparoUsuario.disparando()){
-			disparoUsuario.disparando(!disparoUsuario.disparando())
-			disparoUsuario.disparar(userPosition.x(), userPosition.y()+1)
-			
-			game.onTick(disparoUsuario.speed(), 'disparoUsuario', {
-				disparoUsuario.moverse()
-			})
-		}
-		
-	}
 }
 
 class Enemigo inherits Jugador{
+	method evento() = "disparoEnemigo" 
 	
 	method colision(){
 		console.println("disparoUsuario colisiona con el enemigo")
@@ -73,30 +76,17 @@ class Enemigo inherits Jugador{
 		} catch e : Exception{
 			
 		}
-		disparoUsuario.disparar(20, 20)
+		disparoUsuario.desaparecer()
 		disparoUsuario.disparando(false)
-		
-		//Añadir puntos
 		
 		//Le resto la vida al enemigo
 		vida -= 1
 		if(vida <= 0) game.removeVisual(self)
 		
 		//Saco al enemigo
-		gameManager.borrarEnemigo(self)	
+		enemigosManager.borrarEnemigo(self)	
+		enemigosManager.validarCantidadEnemigos()
 		gameManager.sumarPunto()
-		gameManager.validarCantidadEnemigos()
 	}
 	
-	method disparar(){
-		const enemyPosition = position
-		if(!disparoEnemigo.disparando()){
-			disparoEnemigo.disparando(!disparoEnemigo.disparando())
-			disparoEnemigo.disparar(enemyPosition.x(), enemyPosition.y()-1)
-			
-			game.onTick(disparoEnemigo.speed(), 'disparoEnemigo', {
-				disparoEnemigo.moverse()
-			})
-		}
-	}
 }

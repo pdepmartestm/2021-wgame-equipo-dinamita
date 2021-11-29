@@ -9,6 +9,8 @@ class Disparo {
 	method image() = image	
 	method speed() = speed
 	
+	method moverse(){}
+	
 	method disparar(x, y){
 		position = game.at(x, y)
 	}
@@ -35,7 +37,7 @@ class Disparo {
 object disparoUsuario inherits Disparo{
 	var property disparando = false
 	
-	method moverse(){	
+	override method moverse(){	
 		if(position.y() < 13) {
 			self.position(position.up( 1 ))
 		}else{
@@ -49,7 +51,7 @@ object disparoUsuario inherits Disparo{
 object disparoEnemigo inherits Disparo{
 	var property disparando = false
 	
-	method moverse(){	
+	override method moverse(){	
 		if(position.y() >= 0) {
 			self.position(position.down( 1 ))
 		}else{

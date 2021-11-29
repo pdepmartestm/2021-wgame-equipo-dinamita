@@ -57,7 +57,7 @@ object enemigosManager {
 	
 	method validarCantidadEnemigos(){
 		if(enemigos.isEmpty()){
-			gameManager.gameOver()
+			gameManager.win()
 		}
 	}
 	

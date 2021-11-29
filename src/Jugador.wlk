@@ -59,7 +59,7 @@ object usuario inherits Jugador(
 		//Le resto la vida al jugador
 		vida -= 1
 		if(vida <= 0) {
-			gameManager.gameOver2()
+			gameManager.lose()
 		}
 	}
 }

@@ -3,6 +3,7 @@ import Jugador.*
 import gameManager.*
 import Disparos.*
 import Nivel.*
+import Score.*
 
 program juego {
 	const ancho = 13
@@ -13,6 +14,11 @@ program juego {
 	game.addVisual(usuario)
 	game.addVisual(disparoUsuario)
 	game.addVisual(disparoEnemigo)
+	
+	game.addVisual(scoreNumberUnidades)
+	game.addVisual(scoreNumberDecenas)
+	game.addVisual(scoreNumberCentenas)
+		
 
 	game.whenCollideDo(disparoEnemigo, { elemento =>
 		elemento.colision()
@@ -39,7 +45,7 @@ program juego {
 	
 	game.boardGround("assets/fondo.png")
 	
-	nivel1.empezar()
+	gameManager.empezar()
 	
 	game.start()
 	

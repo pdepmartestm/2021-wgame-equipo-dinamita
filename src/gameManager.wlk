@@ -3,9 +3,15 @@ import Jugador.*
 import Score.*
 import Disparos.*
 import enemigosManager.*
+import Nivel.*
 
 object gameManager {
 	var totalScore = 0
+	const velocidad_enemigos = 1200
+	const velocidad_disparos = 1200
+	const velocidad_avance = 15000
+	var nivel = 1
+	
 	
 	method totalScore() = totalScore
 	
@@ -22,45 +28,36 @@ object gameManager {
 	}
 	
 	method empezar(){
-		game.addVisual(scoreNumberUnidades)
-		game.addVisual(scoreNumberDecenas)
-		game.addVisual(scoreNumberCentenas)
-		
-		enemigosManager.generarEnemigos(2, 1)
-		
-		game.onTick(500, 'moverEnemigos', { 
-			enemigosManager.moverEnemigos()
-		})
-		
-		game.onTick(disparoEnemigo.speed(), 'dispararEnemigos', { 
-			enemigosManager.dispararEnemigo()
-		})
-		
-		game.onTick(10000, "avanzarEnemigos",{
-			enemigosManager.avanzarEnemigos()
-		})
-		
+		const nuevoNivel = new Nivel(velocidadEnemigos = velocidad_enemigos / nivel, velocidadDisparos = velocidad_disparos / nivel, velocidadAvance = velocidad_avance / nivel)
+		nuevoNivel.empezar()
 	}
 	
-	method gameOver(){
+	method win(){
+		nivel++
 		try{
 			game.removeTickEvent("moverEnemigos")
+			game.removeTickEvent('dispararEnemigos')
 		} catch e : Exception{
 			
 		}
-		game.removeTickEvent('dispararEnemigos')
-		game.addVisual(ganador)
+		if(nivel > 3){
+			game.addVisual(ganador)
+		}else{
+			const nuevoNivel = new Nivel(velocidadEnemigos = velocidad_enemigos / nivel, velocidadDisparos = velocidad_disparos / nivel, velocidadAvance = velocidad_avance / nivel)
+			nuevoNivel.empezar()
+		}
 	}
 	
-	method gameOver2() {
+	method lose() {
 		try{
 			game.removeTickEvent("avanzarEnemigos")
+			game.removeTickEvent('moverEnemigos')
+			game.removeTickEvent('dispararEnemigos')
 		} catch e : Exception{
 			
 		}
-		game.removeTickEvent('moverEnemigos')
-		game.removeTickEvent('dispararEnemigos')
 		usuario.eliminar()
+		game.clear()
 		game.addVisual(perder)
 		
 	}
